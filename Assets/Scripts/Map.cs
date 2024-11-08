@@ -6,7 +6,7 @@ public class Map
 {
     int mapSize = 9;
     public int MapSize => mapSize;
-    //RoomBase[] Rooms;
+    RoomBase[] Rooms;
 
     // Update is called once per frame
     public Map()
