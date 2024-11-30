@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class RoomBase : MonoBehaviour
 {
-    [SerializeField] private GameObject NorthDoorway, EastDoorway, SouthDoorway, WestDoor;
+    [SerializeField] private GameObject NorthDoorway, EastDoorway, SouthDoorway, WestDoor;          // Doorways for each direction (north, east, south, west)
+    [SerializeField] public GameObject RoomLight;                                                   // Room light object
 
     private RoomBase _north, _east, _south, _west;
 
@@ -16,6 +17,11 @@ public class RoomBase : MonoBehaviour
 
     private Vector2 _roomPosition;
     public Vector2 RoomPosition => _roomPosition;
+    private Inventory _playerInventory;
+    public void SetPlayerInventory(ref Inventory inventory)
+    {
+        _playerInventory = inventory;
+    }
     public virtual void SetRoomLocation(Vector2 coordinates)
     {
         // X, Z plane

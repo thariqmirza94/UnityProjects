@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2d2163c0eb16d4f82661bb00dd4670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMapPrefab: {fileID: 4161043855838902666, guid: ea08870806ce1484e9fbf4d00d20582e, type: 3}
-  PlayerPrefab: {fileID: 3280189286437015740, guid: 5088616bd8ac2e146aea85b358e4f57d, type: 3}
+  _gameMapPrefab: {fileID: 3913677354031674477, guid: c3733dfbbe19163419ab3b5fa3b46657, type: 3}
+  _playerControllerPrefab: {fileID: 3280189286437015740, guid: 5088616bd8ac2e146aea85b358e4f57d, type: 3}
+  _inventoryPrefab: {fileID: 3854662959717596111, guid: ba5b2cc43627c464cb56cbbc7ecb4060, type: 3}

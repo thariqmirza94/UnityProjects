@@ -17,12 +17,7 @@ public class PlayerMouseAndPhysics : MonoBehaviour
     {
 
         PlayerHead.localPosition = new Vector3(PlayerHead.localPosition.x, -0.8f, PlayerHead.localPosition.z);
-
-
         physicsBody = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         physicsBody.freezeRotation = true;
     }
 

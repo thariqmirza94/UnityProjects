@@ -1,39 +1,75 @@
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    private RoomBase _currentRoom = null; // Keeps track of the current room the player is in
+    [SerializeField] private Camera _playerCamera;
+    [SerializeField] private float _walkSpeed; // Walk speed
+    [SerializeField] private float _runSpeed; // Run speed
+    [SerializeField] private float _jumpPower; // Jump power
+    [SerializeField] private float _lookSpeed; // how fast player camera moves
+    [SerializeField] private float _lookXLimit; // Up Down angle limit
 
-    public void Setup()
+    Vector3 moveDirection = Vector3.zero; // Direction for moving
+    float rotationX = 0;
+    public bool canMove; // Player only moves in true statement
+    Rigidbody rb;
+    public void SetUp()
     {
-        // Initial setup for the player, no code needed here for now
+        rb = GetComponent<Rigidbody>(); // Get player rigid body
+        rb.freezeRotation = true;  // To avoid unwanted rotation
+        canMove = true;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
-    private void Update()
+    void Update()
     {
-        // Check if the space bar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canMove)
         {
-            // If we're in a room, "search" it (do something related to the room)
-            if (_currentRoom != null)
+            // Get the forward and right directions relative to the player's transform
+            Vector3 forward = transform.forward;
+            Vector3 right = transform.right;
+
+            // Check if the player is running by holding the Left Shift key
+            bool isRunning = Input.GetKey(KeyCode.LeftShift); // Running when left shift is pressed
+            float speed = isRunning ? _runSpeed : _walkSpeed; // Set speed based on running state
+
+            // Get movement input for forward/backward and left/right
+            float moveForward = Input.GetAxis("Vertical") * speed; // Forward/backward movement input scaled by speed
+            float moveSide = Input.GetAxis("Horizontal") * speed;  // Left/right movement input scaled by speed
+
+            // Calculate the direction of movement based on input and the player's transform
+            moveDirection = forward * moveForward + right * moveSide;
+
+            // Update the Rigidbody's velocity, maintaining its current vertical velocity
+            Vector3 velocity = new Vector3(moveDirection.x, rb.velocity.y, moveDirection.z);
+            rb.velocity = velocity;
+
+            // Handle vertical camera rotation (looking up and down) with mouse input
+            rotationX += -Input.GetAxis("Mouse Y") * _lookSpeed; // Adjust rotationX with inverted mouse Y input
+            rotationX = Mathf.Clamp(rotationX, -_lookXLimit, _lookXLimit); // Clamp vertical rotation to prevent over-rotation
+            _playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); // Apply vertical rotation to the camera
+
+            // Handle horizontal player rotation (turning left/right) with mouse input
+            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * _lookSpeed, 0);
+
+            // Handle jumping input
+            if (Input.GetButtonDown("Jump") && IsGrounded()) // Jump only if grounded and "Jump" button is pressed
             {
-                _currentRoom.OnRoomSearched();
+                rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse); // Apply upward force for jumping
             }
         }
     }
 
-    private void OnTriggerEnter(Collider otherObject)
+    // return true or false depending on player and ground distance
+    bool IsGrounded()
     {
-        // When the player enters a new room, update the current room reference
-        _currentRoom = otherObject.GetComponent<RoomBase>();
-        _currentRoom.OnRoomEntered();
+        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
     }
 
-    private void OnTriggerExit(Collider otherObject)
+    public void CameraLookAtObject(Transform targetObject)
     {
-        // When the player exits a room, trigger the room exit behavior
-        RoomBase exitingRoom = otherObject.GetComponent<RoomBase>();
-        exitingRoom.OnRoomExited();
+        _playerCamera.transform.LookAt(targetObject);
     }
 }
