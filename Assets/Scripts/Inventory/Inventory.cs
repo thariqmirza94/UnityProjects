@@ -1,17 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
     // Item prefabs
-    public GameObject daggerPrefab;           // Prefab for the dagger weapon
-    public GameObject longSwordPrefab;        // Prefab for the long sword weapon
-    public GameObject dragonSwordPrefab;      // Prefab for the dragon sword weapon
-    public GameObject healPotionPrefab;       // Prefab for the healing potion
-    public GameObject fireScrollPrefab;       // Prefab for the fire scroll
-    public GameObject shieldScrollPrefab;     // Prefab for the shield scroll
-    public GameObject HammerPrefab;                 // Prefab for the Hammer
+    public GameObject axePrefab;           // Prefab for the axe weapon
+    public GameObject cleaverPrefab;        // Prefab for the cleaver weapon
+    public GameObject healingPillPrefab;       // Prefab for the healing potion
+    public GameObject macePrefab;                 // Prefab for the Mace
 
     // Inventory list to hold actual item instances
     public List<GameObject> inventoryList = new List<GameObject>(); // List of all items in the inventory
@@ -30,13 +26,10 @@ public class Inventory : MonoBehaviour
     public void SetUp()
     {
         //Add item prefabs in item list
-        itemsList.Add(healPotionPrefab);
-        itemsList.Add(daggerPrefab);
-        itemsList.Add(longSwordPrefab);
-        itemsList.Add(dragonSwordPrefab);
-        itemsList.Add(fireScrollPrefab);
-        itemsList.Add(shieldScrollPrefab);
-        itemsList.Add(HammerPrefab);
+        itemsList.Add(healingPillPrefab);
+        itemsList.Add(axePrefab);
+        itemsList.Add(cleaverPrefab);
+        itemsList.Add(macePrefab);
     }
 
     public void AddItem(int itemId)
@@ -55,14 +48,14 @@ public class Inventory : MonoBehaviour
             {
                 itemQuantities[itemComponent.ID]++; // Quantity + 1
                 Debug.Log(itemComponent);
-                Debug.Log("Item is consumable item and it's quantity +1");
+                Debug.Log("Item is a consumable item.");
             }
             else // Player doesn't has item in Inventory
             {
                 itemQuantities[itemComponent.ID] = 1; // Initialize item quantity
-                inventoryList.Add(itemPrefab); // Only add to inventory if it's the first instance
+                inventoryList.Add(itemPrefab); // Only add to inventory for the first instance
                 Debug.Log(itemComponent);
-                Debug.Log("Item is consumable item and it is new item in inventory");
+                Debug.Log("New consumable item added to inventory");
             }
         }
         else if (itemComponent is Weapon) // Item is weapon
@@ -76,10 +69,10 @@ public class Inventory : MonoBehaviour
             else // Player has item in Inventory
             {
                 Debug.Log(itemComponent);
-                Debug.Log("Non-consumable item already exists in inventory, not adding again.");
+                Debug.Log("Non-consumable item already exists in inventory.");
             }
         }
-
+        
         DebugInventoryContents();
     }
 
@@ -96,7 +89,7 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
-
+        
         if (itemToRemove != null) // item is found
         {
             Item item = itemToRemove.GetComponent<Item>(); //call item script
@@ -124,7 +117,7 @@ public class Inventory : MonoBehaviour
                     Debug.LogWarning($"No {itemToRemove.name} left in inventory to remove.");
                 }
             }
-            if (item is Weapon)
+            if (item is Weapon) 
             {
                 inventoryList.Remove(itemToRemove); // remove item prefab game object in inventory
                 Debug.Log($"Removed {itemToRemove} from inventory.");
@@ -135,7 +128,6 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("Item not found in inventory.");
         }
-
     }
 
     public bool DoesPlayerHave(int itemId) // check if the item is stored in inventory by using item id

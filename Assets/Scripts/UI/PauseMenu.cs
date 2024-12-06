@@ -2,38 +2,46 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private UIManager _uiManager;     
-    [SerializeField] private InGameHud _gameHud;    
+    [SerializeField] private UIManager _uiSystem;      // Reference to the UIManager for screen transitions.
+    [SerializeField] private InGameHud _ingameHud;     // Reference to the InGameHud for managing in-game UI state.
+    [SerializeField] private GameGuide _gameGuide;     // Reference to the GameGuide menu.
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _uiManager.OpenInGameHud(); // Toggle in-game HUD.
-            _gameHud.gamePaused = false; // Resume game.
+            _uiSystem.OpenInGameHud(); // Switch back to the in-game HUD.
+            _ingameHud.gamePaused = false; // Resume the game.
         }
     }
+
     private void OnEnable()
     {
-        Cursor.lockState = CursorLockMode.None;  // Unlock cursor.
-        Cursor.visible = true;                   // Make cursor visible.
-        Time.timeScale = 0f;                     // Pause timer.
+        Cursor.lockState = CursorLockMode.None;  // Unlock the cursor for interaction.
+        Cursor.visible = true;                   // Make the cursor visible.
+        Time.timeScale = 0f;                     // Pause the game time.
     }
+
     private void OnDisable()
     {
-        Time.timeScale = 1.0f; // Resume timer.
+        Time.timeScale = 1.0f; // Resume the game time.
     }
-    public void GuideButton()
-    {
-        _uiManager.GuideScreen(); // Opens How to Play screen.
-    }
+
     public void ResumeButton()
     {
-        _uiManager.OpenInGameHud(); // Toggle in-game HUD.
-        _gameHud.gamePaused = false; // Resume the game.
+        _uiSystem.OpenInGameHud(); // Switch back to the in-game HUD.
+        _ingameHud.gamePaused = false; // Resume the game.
     }
-    public void ButtonQuitGame()
+
+    public void QuitGameButton()
     {
-        Application.Quit(); // Exit application.
-        Debug.Log("Application is quitting."); 
+        Application.Quit(); // Exit the application.
+        Debug.Log("Application is quitting.");
+    }
+
+    public void GameGuideButton()
+    {
+        _gameGuide.fromPaused = true;
+        _uiSystem.OpenGameGuideMenu(); // Opens game guide menu.
     }
 }

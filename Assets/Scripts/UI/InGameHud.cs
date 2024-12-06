@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 public class InGameHud : MonoBehaviour
 {
-    [SerializeField] private UIManager _uiManager;
-    [SerializeField] private CombatHud _combatHud;
+    [SerializeField] private UIManager _uiSystem;
+    [SerializeField] private BattleHud _battleHud;
     [SerializeField] private Image _healthBar;
     [SerializeField] private TMP_Text _timer;
     [SerializeField] private TMP_Text _playerHealth;
     [SerializeField] private InventoryUI _inventoryUI;
-    [SerializeField] private UseItemButton _useItem;
+    [SerializeField] private UseItemButton _useItemButton;
     [SerializeField] private GameObject _inventoryScreen;
-    
     private Player _player;
+
     public bool gamePaused = true;
     private float _timerTime = 0;
     private Inventory _inventory;
@@ -21,22 +21,24 @@ public class InGameHud : MonoBehaviour
 
     private void Start()
     {
-        _timer.text = "Timer Paused"; // Pause timer
-        _timer.color = Color.red;
+        // Pause timer
+        _timer.text = "Timer Paused";
+        _timer.color = Color.yellow;
     }
+
     public void SetUp()
     {
         gamePaused = false;
         _player = Object.FindAnyObjectByType<Player>();
         OnHealthChange(_player.curHP, _player.maxHp);
-        _combatHud.SetUp();
+        _battleHud.SetUp();
 
         // FInd Inventory in game scene.
         _inventory = Object.FindAnyObjectByType<Inventory>();
         if (_inventory != null)
         {
             _inventoryUI.SetUp(_inventory);
-            _useItem.SetUp(_inventory);
+            _useItemButton.SetUp(_inventory);
         }
         else
         {
@@ -60,13 +62,13 @@ public class InGameHud : MonoBehaviour
         _timerTime += Time.deltaTime;
         _timer.text = $"{_timerTime,0:0.000}";
 
-        if (Input.GetKeyDown(KeyCode.Tab)) //open pause menu
+        if (Input.GetKeyDown(KeyCode.Escape)) //open pause menu
         {
             gamePaused = true;
-            _uiManager.OpenPauseMenu();
+            _uiSystem.OpenPauseMenu();
         }
 
-        if (Input.GetKeyDown(KeyCode.E)) // Toggle inventory screen in game hud
+        if (Input.GetKeyDown(KeyCode.Tab)) // Toggle inventory screen in game hud
         {
             // lock player camera and show cursor
             Cursor.lockState = CursorLockMode.None;
@@ -78,7 +80,7 @@ public class InGameHud : MonoBehaviour
             _inventoryScreen.SetActive(!_inventoryScreen.activeSelf); // toggle active state of inventory screen
 
             // if inventory screen is not active, cursor lock and invisible
-            if (!_inventoryScreen.activeSelf)
+            if (!_inventoryScreen.activeSelf) 
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -98,7 +100,7 @@ public class InGameHud : MonoBehaviour
         OnHealthChange(_player.curHP, _player.maxHp); // update player health
     }
 
-    public void OnHealthChange(float currenthealth, float maxHealth)
+    public void OnHealthChange(float currenthealth, float maxHealth) 
     {
         _healthBar.fillAmount = currenthealth / maxHealth;
         _playerHealth.text = $"{currenthealth} / {maxHealth}";

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &867636550351677840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8960878804257688935}
+  - component: {fileID: 7816086672471040668}
+  m_Layer: 0
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8960878804257688935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867636550351677840}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 813.50323, y: 99.606606, z: 733.45667}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7816086672471040668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867636550351677840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41489dec91be23e45850f8a47f315c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axePrefab: {fileID: 927239063041750151, guid: 747cc1c8525984d479f004da87810018, type: 3}
+  cleaverPrefab: {fileID: 6269516624594976772, guid: f5943ba2864afab4ead30a67d33d24f2, type: 3}
+  healingPillPrefab: {fileID: 5111325519535625817, guid: ec3c7be7979628e4682b4769338fba7b, type: 3}
+  macePrefab: {fileID: 2902967333936335767, guid: 0b7a5a8deb1d85943a4fa390b0db81a4, type: 3}
+  inventoryList: []

@@ -3,24 +3,26 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Camera _playerCamera;
+    [SerializeField] private Camera _playerCamera; // Player camera
     [SerializeField] private float _walkSpeed; // Walk speed
     [SerializeField] private float _runSpeed; // Run speed
     [SerializeField] private float _jumpPower; // Jump power
     [SerializeField] private float _lookSpeed; // how fast player camera moves
     [SerializeField] private float _lookXLimit; // Up Down angle limit
 
+
     Vector3 moveDirection = Vector3.zero; // Direction for moving
     float rotationX = 0;
+
     public bool canMove; // Player only moves in true statement
-    Rigidbody rb;
+    
+    Rigidbody rb; 
+
     public void SetUp()
     {
         rb = GetComponent<Rigidbody>(); // Get player rigid body
         rb.freezeRotation = true;  // To avoid unwanted rotation
         canMove = true;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
     }
 
     void Update()

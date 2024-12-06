@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 9478fa4abe4012846a2bf1210678f2e1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - startingRoomPrefab: {instanceID: 0}
+  - bossRoomPrefab: {instanceID: 0}
+  - treasureRoomPrefab: {instanceID: 0}
+  - combatRoomPrefab: {instanceID: 0}
+  - healingRoomPrefab: {instanceID: 0}
+  - tradeRoomPrefab: {instanceID: 0}
+  - libraryRoomPrefab: {instanceID: 0}
+  - currentRoom: {instanceID: 0}
+  - lastRoom: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

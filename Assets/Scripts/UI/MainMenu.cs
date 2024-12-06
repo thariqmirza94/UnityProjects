@@ -1,26 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private UIManager _uiManager;
+    [SerializeField] private UIManager _uiSystem;
     [SerializeField] private InGameHud _gameHud;
-    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private GameController _gameController;
+
     public void ButtonStartGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"); // Load the game scene.
-        _gameManager.StartGame();                                     // Start the game
-        _uiManager.OpenInGameHud();                                      // Opens in-game HUD.
-        _gameHud.SetUp();                                                // Set up the in-game HUD.
+        _gameController.StartGame();                                       // Start the game via the GameController.
+        _uiSystem.OpenInGameHud();                                         // Transition to the in-game HUD.
+        _gameHud.SetUp();                                                 // Set up the in-game HUD.
+
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor for gameplay.
+        Cursor.visible = false;                  // Hide the cursor.
     }
-    public void GuideButton()
+
+    public void GameGuideButton()
     {
-        _uiManager.GuideScreen(); // Opens How to Play screen.
+        _uiSystem.OpenGameGuideMenu(); // Opens game guide menu.
     }
+
     public void ButtonQuitGame()
     {
-        Application.Quit(); // Exit application.
-        Debug.Log("Application is quitting."); 
+        Application.Quit(); // Exit the application.
+        Debug.Log("Application is quitting.");
     }
 }
